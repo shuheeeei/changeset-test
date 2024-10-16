@@ -36,7 +36,6 @@ jobs:
         with:
           title: "[${{ env.WORKING_DIRECTORY }}]: バージョンアップデート"
           commit: "${{ env.WORKING_DIRECTORY }}: Update versions"
-          publish: npm run ci:publish
           branch: ${{ env.WORKING_DIRECTORY }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
