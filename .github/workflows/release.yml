@@ -36,5 +36,6 @@ jobs:
         uses: changesets/action@v1
         with:
           branch: changeset-test-branch
+          baseBranch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
