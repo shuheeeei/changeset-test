@@ -34,7 +34,6 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          version: npm run ci:version
           title: "[${{ env.WORKING_DIRECTORY }}]: バージョンアップデート"
           commit: "${{ env.WORKING_DIRECTORY }}: Update versions"
           publish: npm run ci:publish
