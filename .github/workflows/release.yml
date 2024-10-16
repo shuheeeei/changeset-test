@@ -35,8 +35,6 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          title: "[${{ env.WORKING_DIRECTORY }}]: バージョンアップデート"
-          commit: "${{ env.WORKING_DIRECTORY }}: Update versions"
           branch: test-library-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
