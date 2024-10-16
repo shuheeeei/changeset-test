@@ -1,5 +1,0 @@
----
-"changeset-test": patch
----
-
-fix
