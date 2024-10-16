@@ -1,0 +1,33 @@
+name: Deploy
+
+on:
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - release
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  deploy:
+    name: Deploy
+
+    permissions:
+      contents: write
+
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'changeset-release')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        uses: 108yen/changeset-release@v1
+        with:
+          target: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Deploy
+      #   run: [デプロイ処理とか]

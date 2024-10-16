@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  WORKING_DIRECTORY: "libraries/frontend/test-library"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+
+    permissions:
+      pull-requests: write
+      contents: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
+        with:
+          cwd: ${{ env.WORKING_DIRECTORY }}
+          version: npm ci:version
+          title: "[${{ env.WORKING_DIRECTORY }}]: バージョンアップデート"
+          commit: "${{ env.WORKING_DIRECTORY }}: Update versions"
+          publish: npm ci:publish
+          branch: ${{ env.WORKING_DIRECTORY }}
+          branch: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
