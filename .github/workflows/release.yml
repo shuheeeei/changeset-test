@@ -40,6 +40,5 @@ jobs:
           commit: "${{ env.WORKING_DIRECTORY }}: Update versions"
           publish: npm ci:publish
           branch: ${{ env.WORKING_DIRECTORY }}
-          branch: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
