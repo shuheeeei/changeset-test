@@ -55,11 +55,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up GitHub CLI
-        uses: actions/setup-gh@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Change PR base branch to main
         run: |
           gh pr edit changeset-release/${{ env.WORKING_DIRECTORY }} --base main
