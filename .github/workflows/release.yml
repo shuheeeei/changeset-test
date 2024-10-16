@@ -36,6 +36,6 @@ jobs:
         with:
           title: "[${{ env.WORKING_DIRECTORY }}]: バージョンアップデート"
           commit: "${{ env.WORKING_DIRECTORY }}: Update versions"
-          branch: ${{ env.WORKING_DIRECTORY }}
+          branch: test-library-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
