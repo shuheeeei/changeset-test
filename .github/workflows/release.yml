@@ -7,6 +7,7 @@ on:
 
 env:
   WORKING_DIRECTORY: 'libraries/frontend/test-library'
+  MAIN_BRANCH_NAME: 'main'
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -32,9 +33,12 @@ jobs:
       - name: Check if branch exists
         id: check_branch_exists
         run: |
-          if git show-ref --verify --quiet refs/heads/${{ env.WORKING_DIRECTORY }}; then
+          git fetch origin ${{ env.WORKING_DIRECTORY }}
+          if git show-ref --verify --quiet refs/remotes/origin/${{ env.WORKING_DIRECTORY }}; then
+            echo "Branch exists"
             echo "result=true" >> "${GITHUB_OUTPUT}"
           else
+            echo "Branch does not exist"
             echo "result=false" >> "${GITHUB_OUTPUT}"
           fi
 
@@ -42,6 +46,7 @@ jobs:
       - name: Create branch if not exists
         if: steps.check_branch_exists.outputs.result == 'false'
         run: |
+          git pull origin ${{ env.MAIN_BRANCH_NAME }}
           git checkout -b ${{ env.WORKING_DIRECTORY }}
           git push origin ${{ env.WORKING_DIRECTORY }}
 
@@ -55,8 +60,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Change PR base branch to main
-        run: |
-          gh pr edit changeset-release/${{ env.WORKING_DIRECTORY }} --base main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Change PR base branch to main
+      #   run: |
+      #     gh pr edit changeset-release/${{ env.WORKING_DIRECTORY }} --base ${{ env.MAIN_BRANCH_NAME }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
