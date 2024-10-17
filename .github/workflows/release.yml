@@ -33,6 +33,7 @@ jobs:
       - name: Check if branch exists
         id: check_branch_exists
         run: |
+          git fetch --all
           if git show-ref --verify --quiet refs/heads/${{ env.WORKING_DIRECTORY }}; then
             echo "Branch exists"
             echo "result=true" >> "${GITHUB_OUTPUT}"
