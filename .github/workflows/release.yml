@@ -45,8 +45,8 @@ jobs:
       - name: Create branch if not exists
         if: steps.check_branch_exists.outputs.result == 'false'
         run: |
-          git checkout -b ${{ env.WORKING_DIRECTORY }}
           git pull origin ${{ env.MAIN_BRANCH_NAME }}
+          git checkout -b ${{ env.WORKING_DIRECTORY }}
           git push origin ${{ env.WORKING_DIRECTORY }}
 
       - name: Install Dependencies
